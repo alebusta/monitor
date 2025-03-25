@@ -1,8 +1,9 @@
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro:wght@300;400;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
-    
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro:wght@300;400;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Roboto:wght@400;700&family=Open+Sans:wght@400;700&display=swap');    
         /* Barra superior principal con el slogan y botón */
         .header-banner {
-            background-color: #0a1744;
+            background-size: cover; /* cubre todo el ancho*/
+            background-position: center;
+            /*background-color: #0a1744;*/
             padding: 15px 0;
             text-align: center;
             display: flex;
@@ -16,9 +17,9 @@
         
         .header-slogan {
             color: white;
-            font-family: 'Libre Baskerville', serif;;
+            font-family: 'Open Sans', sans-serif;
             font-size: 2.8rem;
-            font-weight: 400;
+            font-weight: 550;
             letter-spacing: -0.5px;
         }
         
