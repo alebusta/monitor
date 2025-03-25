@@ -4,6 +4,7 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 from datetime import date
+import base64
 from cloud import render_wordcloud
 from funciones import extraer_secciones
 
@@ -15,34 +16,29 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
+# Función para codificar la imagen en base64
+def get_base64_of_bin_file(file_path):
+    with open(file_path, 'rb') as f:
+        data = f.read()
+    return base64.b64encode(data).decode()
+
+
 # Cargar CSS desde un archivo externo
-with open("style.css", "r") as f:
+with open("../style.css", "r") as f:
     css = f.read()
     st.markdown(f"<style>{css}</style>", unsafe_allow_html=True)
 
+# Codificar la imagen
+img_base64 = get_base64_of_bin_file("../assets/22130.jpg")
+st.markdown(f"""
+    <style>
+    .header-banner {{
+        background-image: url("data:image/jpeg;base64,{img_base64}");
+    }}
+    </style>
+""", unsafe_allow_html=True)
 
 periodo = "Análisis de Noticias: Impacto de la Administración Trump en América Latina, el Caribe y el Mundo (3-16 de marzo de 2025)"
-# Sidebar para navegación
-#st.sidebar.title("Contenido")
-#st.sidebar.markdown("### Reporte EEUU-LATAM")
-#st.sidebar.markdown(periodo)
-
-#pages = {
-#    "Resumen Ejecutivo": "Principales hallazgos de la semana",
-#    "1. Principales Temas": "Decisiones de EE.UU. con impacto en LATAM",
-#    "2. Detalle de Implicancias": "Comercio, inversión, migración y seguridad",
-#    "3. Detalle por Países": "Análisis por país y posibles impactos",
-#    "4. Áreas Críticas": "Variables para monitoreo futuro"
-#}
-
-#for page, description in pages.items():
-#    st.sidebar.markdown(f"[{page}](#{page.lower().replace(' ', '-').replace('.', '')})")
-#    st.sidebar.markdown(f"<span class='small-text'>{description}</span>", unsafe_allow_html=True)
-
-#st.sidebar.markdown("---")
-#st.sidebar.markdown("### Contacto")
-#st.sidebar.markdown("lab_cepal@un.org")
-#st.sidebar.markdown("Tel: +1 (xxx) xxx-xxxx")
 
 # Encabezado
 # CSS personalizado para el encabezado
@@ -57,7 +53,7 @@ st.markdown("""
         <div class="nav-item">Análisis de noticias de impacto para la región</div>
         </div>
     <div class="nav-right">
-        <div class="nav-item">Semana del 3 al 16 de marzo, 2025</div>
+        <div class="nav-item">Semana del 17 al 23 de marzo, 2025</div>
         <div class="nav-item">🌎 CEPAL LAB</div>
     </div>
 </div>
@@ -85,14 +81,14 @@ with columna4:
 # Contenido de la aplicación
 
 # Leer el contenido del archivo markdown
-with open("resumen.md", "r", encoding="utf-8") as file:
+with open("resumen_02.md", "r", encoding="utf-8") as file:
     resumen_contenido = file.read()
 st.markdown("")
 st.info("""
 ## Resumen Ejecutivo
-En la semana del 3 al 16 de marzo de 2025, las decisiones de la administración Trump marcaron la agenda global con un fuerte impacto en América Latina y el Caribe. La imposición de aranceles a México, Canadá, la Unión Europea y China desató una guerra comercial en evolución, con represalias y efectos significativos en sectores clave como el automotriz y el acero, especialmente en México y Brasil. Al mismo tiempo, la intención de Trump de “recuperar” el Canal de Panamá y aumentar la presencia militar en la región generó preocupación sobre la soberanía panameña y la creciente rivalidad entre EE.UU. y China. En Venezuela, las nuevas sanciones y la salida de Chevron profundizaron la crisis económica, con efectos colaterales en países vecinos debido a la migración y disputas territoriales.
+Durante la semana del 17 al 23 de marzo de 2025, las decisiones de la administración Trump marcaron fuertemente la agenda regional, con especial énfasis en la imposición de aranceles y el endurecimiento de la política migratoria. La escalada de tensiones comerciales con México, Canadá, la Unión Europea y China derivó en una creciente incertidumbre económica, particularmente para América Latina y el Caribe, donde se teme un impacto directo en sectores clave, como el caso de México que podría entrar en recesión. Paralelamente, las represalias comerciales de la Unión Europea y la posibilidad de flexibilización en algunos casos mantuvieron el tema en constante evolución. En el ámbito migratorio, la deportación de migrantes venezolanos a prisiones en El Salvador generó alarma regional por posibles violaciones a los derechos humanos, mientras Estados Unidos intensificaba sus advertencias y sanciones contra gobiernos que se niegan a cooperar.
 
-Por otro lado, las políticas migratorias de Trump endurecieron las deportaciones y redujeron los cruces fronterizos, con implicaciones en varios países de la región receptores de migrantes. En el ámbito político, la elección de Albert Ramdin como secretario general de la OEA abre interrogantes sobre su papel en un contexto de tensiones regionales. Además, se destacan la suspensión de fondos de cooperación de USAID, la expansión del crimen organizado y el conflicto en Ucrania como factores de riesgo adicionales. En conjunto, la semana estuvo marcada por incertidumbre económica, tensiones geopolíticas y desafíos en materia de derechos humanos, configurando un escenario volátil que requiere un seguimiento cercano.
+En paralelo, se consolidan otras dinámicas estratégicas en la región, como el fortalecimiento de la cooperación en defensa entre Estados Unidos, Argentina y Ecuador, lo que abre la discusión sobre la instalación de bases militares estadounidenses. También se destacan temas de alto interés como la elección de Albert Ramdin como nuevo secretario general de la OEA, los recortes de Estados Unidos a programas de salud global y la creciente disputa entre Washington y Beijing por el control de minerales críticos en el “triángulo del litio”. Frente a este escenario, la próxima semana será clave para monitorear la evolución de las políticas arancelarias y migratorias de Estados Unidos, la respuesta regional ante posibles sanciones, y el rumbo que tome la OEA bajo su nuevo liderazgo.
 """)
 
 st.header("Principales eventos noticiosos")
@@ -110,8 +106,8 @@ for titulo_seccion, contenido_seccion in secciones.items():
 #st.markdown(resumen_contenido)
 
 ###### SECCIÓN 1: PRINCIPALES TEMAS ######
-st.header("Temas mas frecuentes")
-st.markdown("Los 100 tópicos más recurrentes en las noticias de la semana analizadas")
+#st.header("Temas mas frecuentes")
+
 
 # Crear datos de ejemplo para el gráfico de principales temas
 temas_data = pd.DataFrame({
@@ -123,16 +119,17 @@ temas_data = pd.DataFrame({
 col1, col2 = st.columns([2, 1])
 
 with col1:
+    st.header("Temas más frecuentes")
     render_wordcloud()
 
 with col2:
     st.header("Asuntos clave")
     st.markdown("""
-    Sheinbaum y Trump acordaron postergar los **aranceles** de EE.UU. y seguir cooperando en **migración** y **seguridad**. 
-    
-    Sin embargo, **aranceles** del 25% a todas las importaciones de acero y aluminio a Estados Unidos entraron en vigor generando reacciones de la UE y China.
-    
-    La **política internacional** de EEUU genera incertidumbre y expectativas a la baja en desempeño de la **economía** mundial.
+    - Ante las amenazas arancelarias de Trump, la OCDE revisó a la baja sus previsiones de crecimiento mundial para 2025, 
+                previendo una recesión en la economía mexicana. BMW desafía los aranceles de Trump y protege sus precios en México. 
+                La UE busca acercarse a Latinoamérica tras las amenazas arancelarias de Trump.
+    - Trump ha implementado tácticas drásticas para reducir los cruces fronterizos, incluyendo la detención indefinida del asilo, el despliegue de soldados y la presión a gobiernos latinoamericanos.
+    - Se estima una eventual recesión en Estados Unidos debido a la guerra comercial y las políticas arancelarias de Trump.
     """)
 
 
@@ -171,13 +168,13 @@ with tab1:
     #st.subheader("Impacto Comercial")
     
     st.markdown("""
-        * El **83,8% de los más de 600.000 millones de dólares** en exportaciones mexicanas fueron hacia Estados Unidos (2024) 
+        * Intercambio comercial entre Estados Unidos y México está valorado en **839 mil millones de dólares anuales**.
                 <a href="https://americaeconomica.com/noticia/mexico/la-presidenta-de-mexico-dice-que-prevalecio-el-dialogo-con-trump-para-postergar-los-aranceles.html" target="_blank" style="text-decoration:none; background-color:#f0f0f0; border-radius:50%; display:inline-block; width:75px; height:16px; line-height:16px; font-size:11px; text-align:center;">Ir a fuente</a>
 
-        * La industria automotriz mexicana aporta la **tercera parte de las exportaciones** a Estados Unidos (2024).<a href="https://americaeconomica.com/noticia/mexico/la-presidenta-de-mexico-dice-que-prevalecio-el-dialogo-con-trump-para-postergar-los-aranceles.html" target="_blank" style="text-decoration:none; background-color:#f0f0f0; border-radius:50%; display:inline-block; width:75px; height:16px; line-height:16px; font-size:11px; text-align:center;">Ir a fuente</a>
-        * Los **principales exportadores de acero** a Estados Unidos son Canadá, México, Brasil, Corea del Sur y Japón. La mayor parte de las importaciones estadounidenses de aluminio proceden de Canadá. <a href="https://lancasteronline.com/lavoz/estados-unidos/trump-promete-recuperar-riqueza-robada-al-entrar-en-vigor-aranceles-al-acero-y-aluminio/article_9ffa3ae9-be9e-583e-bb69-ac5a3be3be91.html" target="_blank" style="text-decoration:none; background-color:#f0f0f0; border-radius:50%; display:inline-block; width:75px; height:16px; line-height:16px; font-size:11px; text-align:center;">Ir a fuente</a>
-        * La Unión Europea anunció contramedidas, con aranceles por un valor de **26.000 millones de euros** (alrededor de 28.000 millones de dólares) a partir del 1 de abril, afectando a productos de acero, aluminio, textiles, electrodomésticos y productos agrícolas. <a href="https://lancasteronline.com/lavoz/estados-unidos/trump-promete-recuperar-riqueza-robada-al-entrar-en-vigor-aranceles-al-acero-y-aluminio/article_9ffa3ae9-be9e-583e-bb69-ac5a3be3be91.html" target="_blank" style="text-decoration:none; background-color:#f0f0f0; border-radius:50%; display:inline-block; width:75px; height:16px; line-height:16px; font-size:11px; text-align:center;">Ir a fuente</a>
-        
+        * Se estima que construir una casa en Estados Unidos cuesta $9,000 más debido a los aranceles de Trump.<a href="https://americaeconomica.com/noticia/mexico/la-presidenta-de-mexico-dice-que-prevalecio-el-dialogo-con-trump-para-postergar-los-aranceles.html" target="_blank" style="text-decoration:none; background-color:#f0f0f0; border-radius:50%; display:inline-block; width:75px; height:16px; line-height:16px; font-size:11px; text-align:center;">Ir a fuente</a>
+        * 50% es el arancel que impuso la Unión Europea sobre el whisky estadounidense, una medida que impacta directamente a la industria de bebidas espirituosas, la cual genera más de 200.000 millones de dólares en actividad económica y emplea a aproximadamente 1,7 millones de personas en los sectores de producción, distribución y venta. <a href="https://lancasteronline.com/lavoz/estados-unidos/trump-promete-recuperar-riqueza-robada-al-entrar-en-vigor-aranceles-al-acero-y-aluminio/article_9ffa3ae9-be9e-583e-bb69-ac5a3be3be91.html" target="_blank" style="text-decoration:none; background-color:#f0f0f0; border-radius:50%; display:inline-block; width:75px; height:16px; line-height:16px; font-size:11px; text-align:center;">Ir a fuente</a>
+        * China respondió con aranceles de hasta 15% sobre productos agrícolas estadounidenses. <a href="https://lancasteronline.com/lavoz/estados-unidos/trump-promete-recuperar-riqueza-robada-al-entrar-en-vigor-aranceles-al-acero-y-aluminio/article_9ffa3ae9-be9e-583e-bb69-ac5a3be3be91.html" target="_blank" style="text-decoration:none; background-color:#f0f0f0; border-radius:50%; display:inline-block; width:75px; height:16px; line-height:16px; font-size:11px; text-align:center;">Ir a fuente</a>
+        * El canal mueve el 5% del comercio marítimo mundial. 
         """, unsafe_allow_html=True)
 
 with tab2:
@@ -214,15 +211,15 @@ with tab2:
         st.markdown("""
         #### Cifras de interés
         
-        Se estima que de concretarse la imposición de aranceles generales México podría enfrentar una **contracción de más de 1%** del Producto Interno Bruto en 2025.
+        El índice de precios al productor aumentó un 3.2% en febrero.
         
-        Suspensión de inversiones de relocalización en México. A la  fecha solo se han confirmado seis proyectos de relocalización por **10.000 millones de dólares**, que representan 6% de los anuncios de inversiones comprometidas.
+        La OCDE reduce el pronóstico del PIB mundial del 3,3 % al 3,1 % para el presente año. 
         
-        Chevron, en asociación con Petróleos de Venezuela (Pdvsa), alcanzó una producción de más de **200.000 barriles diarios en 2024**, de acuerdo con datos del Servicio de Investigación del Congreso de EEUU.
+        Se estima que un aumento del 10 % en los aranceles sobre todas las importaciones en Estados Unidos podría generar un incremento de 0,4 puntos porcentuales en la inflación global durante los próximos tres años.
                     
-        La Autoridad del Canal de Panamá invertirá **$8,000 millones** en la próxima década en el desarrollo de proyectos para mantener la vigencia de la ruta interoceánica.
+        América Latina: Proyecto Global Gateway implica un programa de inversión europea por U$S 45 mil millones
         
-        México y Colombia podrían ver una **ralentización significativa** debido a su alta exposición a EE UU, economías más diversificadas como Chile y Perú podrían mantener un **crecimiento moderado**. Brasil, enfrenta el dilema entre **controlar los precios y mantener la inversión extranjera** en un contexto de volatilidad global.            
+        Se estima en Venezuela un impacto acumulado de 3,8 mil millones de dólares en el PIB por la salida de Chevron.            
         """)
 
 with tab3:
@@ -234,24 +231,29 @@ with tab3:
         st.markdown("""
         #### Cifras Clave
         
-        • En 2024, con más de **64 mil millones de dólares**, las remesas fueron la principal fuente de divisas de la economía mexicana.
+        • Durante 2024 las remesas recibidas en México fueron de $64,745 millones, representando el 3.8% del PIB nacional y el 44% del total de ingreo de divisas al país. El 96,6% provienen de Estados Unidos.
         
-        • En Honduras las remesas familiares sumaron **$1,597.6 millones** en el primer bimestre de 2025, representando un crecimiento del 21,8% respecto al mismo período de 2024.
+        • El envío de remesas a El Salvador alcanzó $1,406.4 millones, un crecimiento de 14.2% (enero-febrero 2025).
         
-        • República Dominicana recibió remesas por un total de **1.852 millones de dólares** entre enero y febrero de 2025. Crecimiento de 8.3% respecto a mismo período de 2024.
+        • Los envíos de remesas a México podrían disminuir entre 1.2% y 2.9% debido a políticas migratorias de Estados Unidos.
+                    
+        • Remesas alcanzaron los US$3 mil 638 millones en el primer bimestre de 2025 en Guatemala.
+    
         """)
     
     with col2:
         st.markdown("""
         #### Movimientos migratorios
         
-        El número de migrantes que cruzaron el Tapón del Darién hacia Panamá en enero y febrero cayó un **95,8%** respecto al mismo período en 2024.
+        Más de 530,000 cubanos, haitianos, nicaragüenses y venezolanos ingresaron legalmente a EEUU bajo el permiso humanitario de residencia temporal (“parole”) y el CBP One podrían perder su estatus migratorio.
         
-        El secretario de Estado de EE.UU. confirmó que cerca de **250 miembros del Tren de Aragua** fueron enviados a cárceles de El Salvador. Expertos califican traslados como ilegales.
+        $6 millonespagará EEUU a El Salvador por la detención "terroristas extranjeros".
         
-        **348,000** venezolanos protegidos por el TPS (Estatus de Protección Temporal).
+        Más de 850,000 migrantes cubanos han llegado a Estados Unidos desde 2022 a septiembre de 2024.
         
-        Dos tercios de los 38 millones de mexicanos que viven en Estados Unidos, nacieron en ese territorio. 
+        8,347 personas fueron detenidas intentando cruzar ilegalmente la frontera de EEUU en febrero de 2025. 
+                    
+        8 millones de venezolanos han huido de la agitación económica y emigrado a EE.UU. y otros países de Latinoamérica .
         """)
 
 with tab4:
@@ -286,11 +288,11 @@ with tab4:
         st.markdown("""
         #### Hechos relevantes
         
-        • En el marco de la lucha del gobierno de Estados Unidos contra los cárteles de la droga de México, la Red de Control de Delitos Financieros del Departamento del Tesoro (FinCen) comenzó con acciones para interrumpir los flujos financieros ilícitos de estas organizaciones que transiten por el sistema financiero de EEUU.
+        • Seis cárteles mexicanos designados como organizaciones terroristas extranjeras por el Registro Federal de Estados Unidos.
         
-        • La Embajada de Estados Unidos y la Policía colombiana ofrecen un total de $12 millones de dólares por la captura de tres líderes del Tren de Aragua.
+        • 7 millas (11 kilómetros) adicionales de muro fronterizo a construirse en Arizona.
         
-        • Cerca de 200 de los inmigrantes arrestados en Houston fueron detenidos por delitos relacionados con narcóticos.
+        • 200 millones de dólares cuesta mantener el sistema carcelario de El Salvador.
         """)
 
 ###### SECCIÓN 3: DETALLE POR PAÍSES ######
@@ -298,9 +300,9 @@ st.header("Detalle por Países")
 
 # Datos de ejemplo para países
 paises_data = pd.DataFrame({
-    'País': ['Argentina', 'Bolivia', 'Brazil', 'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'Ecuador', 'El Salvador', 'Guatemala', 'Guyana', 'Haiti', 'Honduras', 'Mexico', 'Nicaragua', 'Panama', 'Paraguay', 'Peru', 'Puerto Rico', 'Dominican Republic', 'Surinam', 'Uruguay', 'Venezuela'],
-    'Menciones': [10, 14, 33, 23, 38, 6, 14, 24, 12, 3, 10, 9, 11, 135, 11, 50, 12, 10, 1, 17, 24, 19, 87],
-    'Áreas Clave': [['aranceles', 'comercio internacional', 'política comercial', 'desigualdad económica', 'globalización'], ['organizaciones internacionales', 'política internacional', 'gobierno y política', 'diplomacia', 'relaciones internacionales'], ['política internacional', 'organizaciones internacionales', 'diplomacia', 'gobierno y política', 'relaciones internacionales'], ['organizaciones internacionales', 'política internacional', 'diplomacia', 'gobierno', 'gobierno y política'], ['organizaciones internacionales', 'política internacional', 'aranceles', 'gobierno y política', 'relaciones internacionales'], ['política internacional', 'gobierno', 'liderazgo político', 'organizaciones internacionales', 'relaciones internacionales'], ['organizaciones internacionales', 'política internacional', 'relaciones internacionales', 'diplomacia', 'gobierno y política'], ['migración', 'relaciones internacionales', 'política', 'derechos humanos', 'economía'], ['deportación', 'migración', 'derechos humanos', 'política migratoria', 'crimen organizado'], ['deportación', 'inmigración', 'migración', 'diplomacia', 'exiliados'], ['petróleo', 'política internacional', 'sanciones', 'corrupción', 'lobby'], ['economía', 'remesas', 'finanzas', 'inversión extranjera', 'migración'], ['elecciones', 'deportación', 'política', 'gobierno', 'inmigración'], ['aranceles', 'economía', 'comercio internacional', 'relaciones internacionales', 'política'], ['organizaciones internacionales', 'política internacional', 'relaciones internacionales', 'democracia', 'diplomacia'], ['relaciones internacionales', 'seguridad nacional', 'presencia militar', 'geopolítica', 'relaciones bilaterales'], ['política internacional', 'organizaciones internacionales', 'diplomacia', 'gobierno', 'relaciones internacionales'], ['aranceles', 'finanzas', 'negocios', 'Microsoft', 'Windows'], ['corrupción', 'delito', 'falta de ética', 'fiscalización', 'justicia penal'], ['economía', 'remesas', 'finanzas', 'inversión extranjera', 'crecimiento económico'], ['organizaciones internacionales', 'política internacional', 'diplomacia', 'relaciones internacionales', 'gobierno y política'], ['organizaciones internacionales', 'política internacional', 'gobierno', 'relaciones internacionales', 'gobierno y política'], ['petróleo', 'migración', 'sanciones', 'política internacional', 'relaciones internacionales']]
+    'País': ['Antigua y Barbuda', 'Argentina', 'Belize', 'Brazil', 'Chile', 'Colombia', 'Costa Rica', 'Cuba', 'Ecuador', 'El Salvador', 'Guatemala', 'Honduras', 'Mexico', 'Nicaragua', 'Panama', 'Paraguay', 'Peru', 'Puerto Rico', 'República Dominicana', 'Surinam', 'Uruguay', 'Venezuela'],
+    'Menciones': [1, 32, 1, 3, 8, 18, 2, 15, 17, 28, 4, 7, 91, 1, 36, 4, 3, 3, 8, 2, 3, 102],
+    'Áreas Clave': [['desarrollo económico', 'economía', 'inclusión', 'integración regional', 'resiliencia'], ['gobierno', 'corrupción', 'sanciones', 'política', 'justicia'], ['gobierno', 'noticias de América Latina', 'política exterior', 'política internacional', 'relaciones diplomáticas'], ['Netflix', 'acuerdos comerciales', 'adquisiciones', 'cine', 'cooperación internacional'], ['cooperación internacional', 'desarrollo regional', 'economía', 'gobierno', 'gobierno migratorio'], ['música', 'política', 'economía', 'elecciones', 'gira musical'], ['gobierno', 'OEA', 'accidentes aéreos', 'desastres naturales', 'justicia'], ['migración', 'política migratoria', 'gobierno', 'inmigración', 'refugiados'], ['política', 'gobierno', 'diplomacia', 'elecciones', 'relaciones internacionales'], ['política migratoria', 'deportación', 'migración', 'inmigración', 'gobierno'], ['migración', 'seguridad fronteriza', 'tráfico de personas', 'conflicto comercial', 'corrupción'], ['economía', 'política migratoria', 'remesas', 'finanzas internacionales', 'migración'], ['economía', 'migración', 'aranceles', 'comercio internacional', 'moneda'], ['gobiernos autoritarios', 'libertad de prensa', 'medio ambiente', 'minería ilegal', 'periodismo'], ['relaciones internacionales', 'fútbol', 'política exterior', 'política internacional', 'comercio internacional'], ['política exterior', 'relaciones internacionales', 'conflicto internacional', 'guerra', 'historia'], ['aranceles', 'billetera digital', 'comercio internacional', 'criptomoneda', 'desastres naturales'], ['arte', 'autonomía', 'comunidad puertorriqueña', 'cultura', 'diáspora'], ['economía', 'espionaje', 'gobierno', 'inflación', 'moneda'], ['gobierno', 'organizaciones internacionales', 'OEA', 'deportación', 'política de la región'], ['Netflix', 'ataques cibernéticos', 'ciberataque', 'cine', 'confidencialidad'], ['petróleo', 'migración', 'gobierno', 'política migratoria', 'política energética']]
     })
 
 # Mapa interactivo de Latinoamérica
@@ -367,7 +369,7 @@ st.plotly_chart(fig, use_container_width=True)
 #)
 #======
 #Paises seleccionados solo para el ejemplo
-paises = ['Mexico','Brasil','Colombia','Chile','Argentina', 'Panamá', 'Venezuela']
+paises = ['Mexico','El Salvador','Colombia','Ecuador','Argentina', 'Panamá', 'Venezuela']
 # Detalle de países seleccionados
 selected_country = st.selectbox("Seleccione un país para más detalles:", paises)#paises_data['País'])
 
@@ -375,121 +377,132 @@ selected_country = st.selectbox("Seleccione un país para más detalles:", paise
 country_data = {
     'Mexico': {
         'overview': """
-*   **Tensiones Comerciales y Aranceles:** La imposición y posterior suspensión temporal de aranceles por parte de Estados Unidos a productos mexicanos (acero, aluminio y otros) ha generado incertidumbre y volatilidad en la economía mexicana. La amenaza de aranceles se utiliza como herramienta de presión en temas de seguridad y migración.
-*   **Negociaciones y Diálogo:** A pesar de las tensiones, se observa un esfuerzo por mantener el diálogo entre los presidentes Trump y Sheinbaum, logrando prórrogas en la aplicación de aranceles.
-*   **Cooperación en Seguridad:** México ha intensificado medidas para controlar el flujo de fentanilo y la migración irregular hacia Estados Unidos, incluyendo el despliegue de la Guardia Nacional en la frontera y la extradición de narcotraficantes.
-*   **Impacto Económico:** La incertidumbre generada por las políticas comerciales de Estados Unidos ha provocado la suspensión de inversiones, la reubicación de empresas y la depreciación del peso mexicano.
-*   **Remesas:** Se destaca la importancia de las remesas enviadas por mexicanos en Estados Unidos como fuente clave de divisas para México.
-*   **Sector Automotriz:** El sector automotriz mexicano, altamente dependiente de las exportaciones a Estados Unidos, se ve particularmente afectado por las tensiones comerciales.
-*   **Apoyo Interno a Sheinbaum:** La presidenta Sheinbaum ha logrado consolidar el apoyo interno a través de una postura firme en defensa de la soberanía y el diálogo con Estados Unidos.
+*   **Amenazas Arancelarias:** El presidente de Estados Unidos, Donald Trump, continúa utilizando la amenaza de imponer aranceles a productos mexicanos como herramienta de presión en temas de migración, seguridad y comercio. Se ha concedido una prórroga hasta el 2 de abril, pero la incertidumbre persiste.
+*   **Alerta de Viaje:** El Departamento de Estado de EE. UU. ha emitido una alerta de viaje de "Nivel 4: No viajar" para varios estados de México debido a la violencia y el crimen organizado, lo que podría afectar el turismo y la inversión.
+*   **Deportaciones y Remesas:** Las políticas migratorias de Trump, incluyendo el aumento de deportaciones, podrían impactar negativamente el flujo de remesas hacia México, aunque la magnitud de la disminución es incierta.
+*   **Designación de Cárteles como Terroristas:** La designación de cárteles mexicanos como organizaciones terroristas extranjeras (FTOs) por parte de EE.UU. podría afectar el crédito a empresas mexicanas y generar mayor vigilancia en las instituciones financieras.
+*   **Inversión y Nearshoring:** A pesar de las tensiones comerciales, se anuncian nuevas inversiones en México, especialmente en el norte del país, en sectores como fertilizantes y centros digitales. El nearshoring sigue siendo una tendencia importante, con empresas trasladando fábricas de China a México.
+*   **Protección Consular:** El gobierno mexicano está reforzando la protección legal y la asistencia a sus connacionales en Estados Unidos ante las políticas migratorias restrictivas.
+*   **Comercio Automotriz:** Trump insiste en que las plantas automotrices se construyan en Estados Unidos y no en México ni Canadá, lo que podría afectar la producción y las exportaciones mexicanas.
+*   **Cooperación en Seguridad:** A pesar de las tensiones, existe cooperación en materia de seguridad, como el decomiso de armas provenientes de EE.UU. y la detención de líderes criminales.
+*   **TV Migrante:** México lanza TV Migrante, un canal público para “dar voz a la migración”
         """,
         'key_areas': """
-*   **Comercio Internacional:** La imposición de aranceles y la posible renegociación del T-MEC representan riesgos significativos para la economía mexicana.
-*   **Seguridad:** Una posible intervención militar de Estados Unidos en México y la designación de cárteles como organizaciones terroristas podrían generar tensiones y afectar la soberanía nacional.
-*   **Migración:** Las políticas migratorias restrictivas de Estados Unidos podrían afectar el flujo de remesas y generar inestabilidad social en México.
-*   **Cooperación:** Los recortes en la ayuda estadounidense podrían afectar programas clave en México, como la prevención de la violencia y la atención a víctimas de desaparición forzada.
-*   **Economía:** La incertidumbre generada por las políticas de Estados Unidos podría afectar la inversión extranjera y el crecimiento económico de México.
-*   **China:** La creciente influencia de China en las importaciones mexicanas podría generar tensiones con Estados Unidos.
+*   **Comercio:** Monitorear de cerca las negociaciones comerciales y la posible imposición de aranceles, así como buscar alternativas para diversificar los mercados y reducir la dependencia de EE.UU.
+*   **Migración:** Evaluar el impacto de las políticas migratorias de EE.UU. en el flujo de remesas y en la situación de los migrantes mexicanos, y fortalecer los programas de apoyo y protección consular.
+*   **Seguridad:** Intensificar la cooperación en materia de seguridad para combatir el crimen organizado y el tráfico de drogas, pero también abordar las causas estructurales de la violencia y la inseguridad en México.
+*   **Inversión:** Promover la inversión extranjera directa en sectores estratégicos y diversificar las fuentes de inversión, aprovechando el nearshoring y las oportunidades que ofrecen otros mercados como los BRICS.
+*   **Diplomacia:** Mantener un diálogo constructivo con el gobierno de EE.UU. para abordar los desafíos comunes y buscar soluciones mutuamente beneficiosas, pero también defender los intereses y la soberanía de México.
+*   **Economía:** Analizar el impacto de las políticas de EE.UU. en la economía mexicana y tomar medidas para mitigar los riesgos y aprovechar las oportunidades, como el fortalecimiento del mercado interno y la diversificación de las exportaciones.
 
     """
     },
-    'Brasil': {
+    'El Salvador': {
         'overview': """
-*   **Elección de Albert Ramdin como Secretario General de la OEA:** La elección del candidato surinamés, con el respaldo de Brasil y otros gobiernos de izquierda, pero sin el apoyo explícito de EE.UU., sugiere un posible distanciamiento entre la OEA y la administración Trump. Se anticipan posibles choques, especialmente en temas relacionados con China y la gestión de crisis en países como Venezuela, Cuba y Nicaragua.
-*   **Tensiones Comerciales:** La imposición de aranceles al acero y aluminio por parte de EE.UU. afecta significativamente a Brasil, generando tensiones y llamados al respeto mutuo por parte del presidente Lula. Se anticipan negociaciones difíciles para evitar una escalada de la guerra comercial.
-*   **Corrupción y Deforestación:** Se destaca la persistencia de la corrupción en la región, con casos emblemáticos como el escándalo SUDAM en Brasil, que involucra la deforestación de la Amazonía. La lucha contra la corrupción y la protección del medio ambiente siguen siendo desafíos importantes.
+*   **Deportaciones Masivas:** EE.UU. ha deportado a El Salvador a cientos de personas, principalmente venezolanos, acusados de pertenecer a la banda criminal "Tren de Aragua" y a la MS-13. Estas deportaciones se realizaron bajo la Ley de Enemigos Extranjeros de 1798.
+*   **Acuerdo Bilateral:** Existe un acuerdo entre los gobiernos de EE.UU. y El Salvador, liderados por Trump y Bukele respectivamente, para que El Salvador reciba a estos deportados en su Centro de Confinamiento del Terrorismo (CECOT). EE.UU. está pagando a El Salvador por el alojamiento de estos individuos.
+*   **Cuestionamientos Legales y de Derechos Humanos:** Las deportaciones han generado controversia y desafíos legales en EE.UU., con un juez federal bloqueando temporalmente las deportaciones. Organizaciones de derechos humanos han expresado preocupación por la falta de debido proceso y la posible criminalización injusta de migrantes.
+*   **Reacciones Políticas:** El gobierno venezolano ha calificado las deportaciones como un "crimen de lesa humanidad" y ha solicitado la intervención de la ONU. Dentro de EE.UU., hay debate sobre la legalidad y la ética de las deportaciones, así como sobre la evidencia que vincula a los deportados con actividades criminales.
+*   **Remesas:** Se observa un aumento en el envío de remesas a El Salvador, posiblemente debido al temor de los salvadoreños en el exterior ante las políticas migratorias de EE.UU.
+*   **TPS:** Activistas urgen a salvadoreños a renovar el Estatus de Protección Temporal (TPS) ante las buenas relaciones entre Trump y Bukele.
         """,
         'key_areas': """
-*   **Comercio:** Es crucial monitorear de cerca las negociaciones comerciales entre EE.UU. y Brasil, así como el impacto de los aranceles al acero y aluminio en la economía brasileña. Se deben explorar estrategias para diversificar los mercados y reducir la dependencia de EE.UU.
-*   **Cooperación:** Es importante evaluar el impacto de los recortes en la financiación de la OEA y buscar fuentes alternativas de financiamiento para programas clave en áreas como derechos humanos, democracia y desarrollo.
+*   **Debido Proceso y Derechos Humanos:** Es crucial monitorear el trato que reciben los deportados en El Salvador, asegurando el respeto a sus derechos humanos y el acceso a un debido proceso legal. Se debe investigar la veracidad de las acusaciones que vinculan a los deportados con actividades criminales.
+*   **Impacto en la Relación Bilateral:** Analizar cómo estas acciones impactan la relación bilateral entre EE.UU. y El Salvador a largo plazo, considerando las implicaciones para la cooperación en otras áreas como comercio, inversión y seguridad.
+*   **Estabilidad Económica de El Salvador:** Evaluar el impacto del aumento de las remesas en la economía salvadoreña, así como los posibles riesgos asociados a la dependencia de estos flujos financieros.
+*   **Cooperación en Seguridad:** Examinar la efectividad de la cooperación entre EE.UU. y El Salvador en la lucha contra el crimen organizado transnacional, asegurando que se respeten los derechos humanos y el estado de derecho.
+*   **Implicaciones Regionales:** Analizar las implicaciones de estas políticas para la migración y la seguridad en la región, incluyendo el papel de Venezuela y otros países afectados por el crimen organizado transnacional.
+*   **Transparencia:** Es fundamental que tanto EE.UU. como El Salvador hagan pública la lista de las personas detenidas y los delitos por los que son investigadas.
 
 
     """
     },
     'Colombia': {
         'overview': """
-*   **Recortes en la Cooperación de USAID:** La administración Trump ha implementado recortes significativos en la financiación de la Agencia de los Estados Unidos para el Desarrollo Internacional (USAID), afectando programas clave en Colombia dirigidos a comunidades afrocolombianas e indígenas. Estos recortes han provocado el cierre de varias ONG y la suspensión de proyectos de desarrollo, generando preocupación sobre el impacto en la estabilidad social y la lucha contra el narcotráfico.
-*   **Elección del Secretario General de la OEA:** La elección de Albert Ramdin como Secretario General de la OEA, con el apoyo de países de izquierda en la región, ha generado expectativas de un enfoque más dialogante y menos confrontacional en la política hemisférica. Sin embargo, también ha suscitado inquietudes en algunos sectores de Estados Unidos, que temen una menor influencia de Washington en la organización.
-*   **Reanudación de Deportaciones:** Se ha reportado un acuerdo entre Venezuela y Estados Unidos para reanudar las deportaciones de migrantes venezolanos, lo que ha generado controversia y críticas por parte de analistas y organizaciones de derechos humanos.
-*   **Designación del Tren de Aragua como Organización Terrorista:** El gobierno de Estados Unidos ha designado al Tren de Aragua, una banda criminal originaria de Venezuela, como organización terrorista global, lo que ha intensificado la cooperación en materia de seguridad entre Estados Unidos y países como Chile y Colombia.        """,
+*   **Migración:** Se observa un flujo constante de migrantes colombianos que regresan desde Estados Unidos y México, lo que sugiere posibles dificultades económicas o cambios en las políticas migratorias en esos países. También se menciona el caso de colombianos deportados desde Estados Unidos después de vivir allí por décadas.
+*   **Remesas:** Las remesas desde Estados Unidos representan una fuente importante de ingresos para Colombia, con un crecimiento constante aunque a un ritmo decreciente. Se anticipa que las remesas podrían convertirse en la principal fuente de divisas del país, superando incluso al petróleo.
+*   **Documentos Desclasificados:** La desclasificación de documentos relacionados con el asesinato de Kennedy revela planes de Estados Unidos con el expresidente colombiano Alberto Lleras Camargo, lo que indica una relación histórica de cooperación y posible intervención en asuntos internos.
+*   **Reforma Laboral:** El hundimiento de la reforma laboral en el Congreso colombiano genera tensión política interna y podría tener implicaciones en las relaciones con Estados Unidos, especialmente si se considera que la reforma podría afectar la inversión extranjera.
+*   **Cooperación en Seguridad:** Expertos internacionales visitan Colombia para analizar la situación de seguridad, lo que sugiere un interés en la cooperación en este ámbito.
+
+""",
         'key_areas': """
-*   **Impacto de los Recortes en la Cooperación:** Es crucial analizar en detalle el impacto de los recortes de USAID en la estabilidad social, la gobernabilidad y la lucha contra el narcotráfico en países como Colombia. Se deben explorar alternativas de financiación y cooperación para mitigar los efectos negativos de estas medidas.
-*   **Gestión de la Migración:** Se requiere un enfoque integral y coordinado para abordar los desafíos de la migración, que incluya políticas de protección de los derechos de los migrantes, programas de desarrollo en los países de origen y una mayor cooperación regional e internacional.
+*   **Impacto de las políticas migratorias de EE.UU.:** Es crucial monitorear las políticas migratorias de Estados Unidos y su impacto en el flujo de migrantes colombianos que regresan al país, así como en el envío de remesas.
+*   **Oportunidades y riesgos en el comercio:** Se debe analizar el impacto de las políticas arancelarias de Estados Unidos en la economía colombiana y las oportunidades para fortalecer el comercio bilateral.
+*   **Cooperación en seguridad:** Es importante evaluar las oportunidades para fortalecer la cooperación en seguridad con Estados Unidos, especialmente en la lucha contra el crimen organizado y el narcotráfico.
+*   **Implicaciones políticas internas:** Se debe analizar cómo la situación política interna en Colombia, incluyendo el hundimiento de la reforma laboral y la propuesta de consulta popular, podría afectar las relaciones con Estados Unidos.
+*   **Diversificación de relaciones:** Es importante considerar la estrategia de Colombia de diversificar sus relaciones internacionales, incluyendo el acercamiento a China y la posible entrada a los BRICS, y cómo esto podría afectar su relación con Estados Unidos.
+
     """
     },
-    'Chile': {
+    'Ecuador': {
         'overview': """
-*   **Monitoreo de medidas arancelarias:** El gobierno chileno está monitoreando activamente los posibles impactos de las medidas arancelarias propuestas por Estados Unidos, incluyendo aranceles al cobre y productos agrícolas, así como esfuerzos para disminuir la capacidad económica de China.
-*   **Designación del Tren de Aragua como organización terrorista:** Estados Unidos designó al Tren de Aragua, con presencia en Chile, como organización terrorista global. Esto ha llevado a detenciones de miembros de la banda en Chile y a la incautación de armas y drogas.
-*   **Elección del Secretario General de la OEA:** Chile, junto con otros países de la región, apoyó la elección de Albert Ramdin como Secretario General de la OEA, quien ha expresado opiniones que difieren de las de Estados Unidos en temas como Venezuela y China.
-*   **Propuesta de Alacero a EEUU:** La Asociación Latinoamericana del Acero (Alacero) propuso a Estados Unidos sustituir las importaciones siderúrgicas de China, en lugar de aplicar aranceles.
+*   **Interés en fortalecer la relación bilateral:** El gobierno de Ecuador, bajo la administración de Daniel Noboa, está tomando medidas concretas para fortalecer la relación con Estados Unidos. Esto incluye el nombramiento de un nuevo embajador en EE.UU., la contratación de una consultora para acercar a Noboa con el presidente estadounidense Donald Trump, y la solicitud formal a EE.UU. para que declare a grupos criminales ecuatorianos como organizaciones terroristas.
+*   **Cooperación en seguridad:** Existe un interés mutuo en la cooperación en materia de seguridad. Ecuador ha expresado interés en albergar una base militar estadounidense y ha anunciado una "alianza estratégica" con Erik Prince, fundador de Blackwater, para asesorar en la lucha contra el narcoterrorismo y la protección marítima.
+*   **Acuerdo comercial:** Ecuador está siguiendo los pasos de Argentina en la búsqueda de un acuerdo comercial con Estados Unidos.
+*   **Política Migratoria:** Se observa preocupación por las deportaciones masivas de migrantes ecuatorianos desde Estados Unidos.
+*   **Influencia de EE.UU. en la política interna:** Se menciona la influencia de Estados Unidos en el proceso político ecuatoriano, con apoyo a la candidatura de Noboa.
         """,
         'key_areas': """
-*   **Comercio Internacional:** Es crucial monitorear de cerca las políticas comerciales de Estados Unidos, especialmente en relación con el cobre y los productos agrícolas, y evaluar las posibles estrategias de diversificación de mercados para mitigar los riesgos.
-*   **Seguridad:** La designación del Tren de Aragua como organización terrorista por parte de Estados Unidos requiere una mayor cooperación en materia de seguridad y el intercambio de información para combatir el crimen organizado transnacional.
-*   **Economía y Finanzas:** Se debe prestar especial atención a los posibles efectos del "Efecto Trump" en la economía chilena, incluyendo la devaluación de la moneda, la caída de las remesas y las presiones inflacionarias, y tomar medidas para mitigar estos riesgos.
-*   **Cooperación Multilateral:** Se debe seguir de cerca el papel de Chile en la OEA y otras organizaciones multilaterales, y buscar formas de promover la cooperación regional y abordar los desafíos comunes.
+*   **Implicaciones de la cooperación en seguridad:** Es crucial analizar las implicaciones de la cooperación en seguridad con EE.UU., incluyendo la posible instalación de bases militares y la participación de empresas privadas como Blackwater. Se deben evaluar los riesgos y beneficios de estas acciones, considerando la soberanía nacional y la posible escalada de la violencia.
+*   **Oportunidades y desafíos del acuerdo comercial:** Se debe analizar el potencial impacto de un acuerdo comercial con EE.UU. en la economía ecuatoriana, identificando oportunidades para el crecimiento y diversificación de las exportaciones, así como los posibles desafíos para sectores sensibles.
+*   **Impacto de las políticas migratorias de EE.UU.:** Es importante monitorear y analizar el impacto de las políticas migratorias de EE.UU. en la población ecuatoriana, incluyendo las deportaciones y las restricciones a la migración. Se deben explorar mecanismos para proteger los derechos de los migrantes ecuatorianos y facilitar su reintegración en caso de retorno.
+*   **Riesgos de la polarización política:** Se debe prestar atención a la polarización política en Ecuador y la posible influencia de actores externos, incluyendo EE.UU. Es importante promover el diálogo y la búsqueda de consensos para garantizar la estabilidad política y social del país.
+*   **Impacto de la designación de grupos criminales como terroristas:** Analizar las implicaciones de la designación de grupos criminales ecuatorianos como organizaciones terroristas por parte de EE.UU., incluyendo el impacto en la cooperación en seguridad y la posible aplicación de sanciones económicas.
     """
     },
     'Argentina': {
         'overview': """
-*   **Tensiones Comerciales:** La imposición de aranceles del 25% por parte de Estados Unidos a las importaciones de acero y aluminio desde Argentina ha generado represalias por parte de la Unión Europea y Canadá, lo que indica un posible escalamiento de las tensiones comerciales.
-*   **Interés en un Acuerdo Comercial:** Paolo Rocca, CEO de Techint, expresó su deseo de que Estados Unidos lidere una alianza de países para contrarrestar la influencia de China en la industria global, sugiriendo un interés en un acuerdo comercial entre Argentina y Estados Unidos.
-*   **Competencia en el Sector Energético:** Se anticipa que Argentina competirá con Estados Unidos en la producción de shale oil de Vaca Muerta, lo que podría generar dinámicas competitivas en el mercado energético.
-*   **Propuesta de Sustitución de Importaciones:** Alacero propuso a Estados Unidos sustituir las importaciones de acero chino por producción latinoamericana, incluyendo la argentina, en lugar de aplicar aranceles, lo que podría abrir oportunidades para la industria siderúrgica argentina.
+*   **Sanciones de EEUU a Cristina Kirchner y Julio De Vido:** El gobierno de Donald Trump sancionó a la expresidenta Cristina Fernández de Kirchner y al exministro Julio De Vido, prohibiéndoles el ingreso a Estados Unidos a ellos y a sus familiares directos, debido a su participación en actos de corrupción durante su gestión. Esta medida se basa en la Sección 7031(c) de la Ley de Asignaciones del Departamento de Estado.
+*   **Cooperación en Defensa:** Se observa un fortalecimiento de la cooperación en materia de defensa entre Argentina y Estados Unidos, con la realización de entrenamientos conjuntos entre las fuerzas armadas de ambos países.
+*   **Interés en Inversión:** A pesar de la crisis industrial, una multinacional estadounidense realizó una inversión multimillonaria en Argentina.
+*   **Reacciones Políticas:** La sanción a Cristina Kirchner generó diversas reacciones políticas en Argentina, incluyendo el respaldo de algunos sectores y la crítica de otros, así como la ironía del presidente Javier Milei.
+*   **Elogios a la Política Económica:** Expertos latinoamericanos elogiaron el rumbo de la economía argentina bajo la administración de Javier Milei, destacando el equilibrio fiscal y la oportunidad de atraer inversiones.
         """,
         'key_areas': """
-*   **Riesgos en el Comercio:** Es crucial monitorear el impacto de los aranceles impuestos por Estados Unidos en la economía argentina y evaluar posibles medidas de mitigación.
-*   **Oportunidades en el Sector Energético:** Se debe analizar el potencial de Vaca Muerta para competir con la producción estadounidense de shale oil y explorar posibles áreas de colaboración en el sector energético.
-*   **Dinámicas Geopolíticas:** Se debe prestar atención a las dinámicas geopolíticas en la región y el papel de Estados Unidos en el equilibrio de poder, especialmente en relación con China.
-*   **Impacto de Políticas Estadounidenses:** Es fundamental analizar el impacto de las políticas económicas y comerciales de Estados Unidos en la economía argentina y evaluar posibles estrategias de adaptación.
+*   **Implicaciones de las Sanciones:** Analizar el impacto de las sanciones impuestas por Estados Unidos a Cristina Kirchner y Julio De Vido en la política interna argentina y en las relaciones bilaterales.
+*   **Oportunidades en Defensa:** Evaluar las oportunidades y riesgos de la cooperación en materia de defensa entre Argentina y Estados Unidos, considerando los intereses y prioridades de ambos países.
+*   **Clima de Inversión:** Monitorear el clima de inversión en Argentina y las perspectivas de nuevas inversiones estadounidenses, teniendo en cuenta los desafíos económicos y políticos del país.
+*   **Política Económica:** Analizar la sostenibilidad de la política económica implementada por el gobierno de Javier Milei y su impacto en la relación con Estados Unidos, especialmente en materia de comercio e inversión.
+*   **Relación Bilateral:** Evaluar el estado general de la relación bilateral entre Argentina y Estados Unidos, considerando los diferentes temas de interés mutuo y los posibles puntos de tensión.
 """,
         
     },
     'Panamá': {
         'overview': """
-*   **Amenazas a la Soberanía del Canal:** El presidente de Estados Unidos, Donald Trump, ha expresado en repetidas ocasiones su intención de "recuperar" el Canal de Panamá, generando tensiones diplomáticas y preocupación en Panamá.
-*   **Planes Militares de EE.UU.:** La Casa Blanca ha solicitado al Departamento de Defensa de EE.UU. que elabore opciones para aumentar la presencia militar estadounidense en Panamá, incluyendo la posibilidad de tomar el control del Canal por la fuerza.
-*   **Negación de Panamá:** El gobierno panameño ha negado cualquier plan o contacto para permitir la presencia militar de EE.UU. en su territorio y ha reafirmado su compromiso con la defensa de su soberanía sobre el Canal.
-*   **Venta de Puertos:** La venta de la concesión de los puertos de Balboa y Cristóbal por parte de CK Hutchison Holdings (Hong Kong) a un consorcio estadounidense liderado por BlackRock ha generado controversia y ha sido interpretada como una posible respuesta a las presiones de EE.UU.
-*   **Inversiones en Infraestructura:** La Autoridad del Canal de Panamá (ACP) planea invertir $8,000 millones en proyectos de infraestructura en la próxima década, incluyendo la construcción de un gasoducto y un reservorio de agua, para mantener la competitividad de la vía interoceánica.
-*   **Migración:** La ofensiva de Trump ha provocado una disminución drástica en el flujo migratorio a través del Tapón del Darién, con un aumento en el número de migrantes que regresan a sus países de origen.
-*   **Cooperación en Seguridad:** Existe un acuerdo de colaboración entre las Fuerzas de Operaciones Especiales de EE.UU. y el Ministerio de Seguridad de Panamá para el entrenamiento de las fuerzas de seguridad panameñas.
-*   **Multilateralismo:** Ante las amenazas de EE.UU., expertos instan a Panamá a defender el multilateralismo y buscar el apoyo de la comunidad internacional en la OEA y la ONU.
-        """,
+*   **Amenazas a la Soberanía del Canal:** El expresidente Trump ha expresado públicamente su deseo de "recuperar" el Canal de Panamá, generando tensiones bilaterales y preocupación en Panamá sobre su soberanía.
+*   **Investigación de EE.UU. sobre el Canal:** La Comisión Marítima Federal (FMC) de EE.UU. ha iniciado una investigación sobre posibles restricciones en el Canal de Panamá que podrían afectar el comercio internacional, lo que podría derivar en sanciones.
+*   **Presencia China en el Canal:** Existe preocupación en EE.UU. sobre la influencia china en la operación del Canal, particularmente en relación con la empresa de Hong Kong CK Hutchison, que administra puertos clave. La venta de activos portuarios de CK Hutchison a la empresa estadounidense BlackRock ha generado controversia y escrutinio.
+*   **Cooperación en Seguridad:** A pesar de las tensiones, la cooperación en seguridad entre EE.UU. y Panamá continúa, incluyendo ejercicios militares conjuntos, asistencia humanitaria y cooperación cibernética. El Comando Sur de EE.UU. ha enviado helicópteros y aviones de transporte a Panamá para programas de asistencia humanitaria y ejercicios de seguridad.
+*   **Visitas de Congresistas:** Delegaciones bipartidistas del Congreso de EE.UU. han visitado Panamá para discutir temas de interés mutuo, incluyendo la gestión del Canal y la presencia china.
+*   **Preocupaciones Económicas:** La calificadora Moody's ha expresado su preocupación por las tensiones entre Panamá y EE.UU., así como por el litigio con Minera Panamá, que podrían afectar la economía panameña.
+*   **Interés en Infraestructura Portuaria:** El presidente de Panamá ha anunciado planes para construir un megapuerto en el Pacífico, complementando los negocios del Canal.
+        
+""",
         'key_areas': """
-*   **Soberanía y Neutralidad del Canal:** Es crucial que Panamá defienda su soberanía sobre el Canal y garantice su neutralidad, en cumplimiento de los tratados existentes.
-*   **Relaciones Bilaterales con EE.UU.:** Panamá debe mantener un diálogo constructivo con EE.UU. para abordar las preocupaciones sobre la influencia china y garantizar la seguridad de la vía interoceánica, sin ceder a presiones que comprometan su soberanía.
-*   **Diversificación Económica:** Panamá debe diversificar su economía y reducir su dependencia del Canal, invirtiendo en otros sectores como el turismo, la logística y la tecnología.
-*   **Cooperación Regional:** Panamá debe fortalecer la cooperación regional con otros países de América Latina y el Caribe para hacer frente a los desafíos comunes, como la migración, el crimen organizado y el cambio climático.
-*   **Inversión en Seguridad:** Panamá debe invertir en el fortalecimiento de sus fuerzas de seguridad para garantizar la seguridad del Canal y combatir el crimen organizado, sin necesidad de recurrir a la presencia militar de EE.UU.
-*   **Impacto de las Políticas Migratorias de EE.UU.:** Es importante monitorear el impacto de las políticas migratorias de EE.UU. en el flujo migratorio a través de Panamá y tomar medidas para proteger los derechos de los migrantes.
-*   **Adhesión al Tratado de Neutralidad:** Se debe considerar la posibilidad de sumar adhesiones al Tratado de Neutralidad de 1977, buscando el apoyo de la comunidad internacional para garantizar la seguridad del Canal.
-*   **Relación con China:** Panamá debe mantener una relación equilibrada con China, buscando oportunidades de cooperación económica sin comprometer su soberanía ni su relación con EE.UU.
+*   **Soberanía del Canal:** Es crucial monitorear de cerca las acciones y declaraciones de EE.UU. con respecto al Canal de Panamá y defender la soberanía panameña sobre la vía acuática.
+*   **Relaciones Comerciales:** La investigación de la FMC y la posible imposición de sanciones podrían tener un impacto significativo en el comercio internacional y la economía panameña. Es importante evaluar los riesgos y oportunidades en este ámbito.
+*   **Influencia China:** La creciente presencia económica y política de China en Panamá es un tema de preocupación para EE.UU. Es necesario analizar las implicaciones de esta influencia en la relación bilateral y en la seguridad regional.
+*   **Cooperación en Seguridad:** A pesar de las tensiones, la cooperación en seguridad entre EE.UU. y Panamá es importante para abordar desafíos comunes como el crimen organizado transnacional, la migración ilegal y la seguridad del Canal.
+*   **Estabilidad Económica:** Las tensiones con EE.UU. y el litigio con Minera Panamá podrían afectar la estabilidad económica de Panamá. Es importante implementar políticas fiscales sólidas y diversificar la economía para mitigar estos riesgos.
+*   **Diplomacia y Diálogo:** Es fundamental mantener un diálogo abierto y constructivo con EE.UU. para abordar las preocupaciones mutuas y fortalecer la relación bilateral.
+
         """
     },
         'Venezuela': {
         'overview': """
-*   **Endurecimiento de Sanciones:** La administración Trump ha intensificado la presión sobre el gobierno de Nicolás Maduro mediante la revocación de licencias a empresas estadounidenses como Chevron, obligándolas a cesar operaciones en Venezuela. Esto impacta la producción y exportación de petróleo venezolano, crucial para la economía del país.
-*   **Suspensión de Vuelos de Deportación:** En respuesta a las sanciones, el gobierno de Maduro suspendió los vuelos de deportación de migrantes venezolanos desde Estados Unidos, utilizando esta medida como herramienta de negociación.
-*   **Acusaciones de Conspiración:** El gobierno venezolano acusa a la petrolera ExxonMobil de conspirar para generar un bloqueo económico contra el país y de influir en la decisión de Estados Unidos de revocar la licencia a Chevron.
-*   **Reanudación de Deportaciones:** A pesar de las tensiones iniciales, se reporta un acuerdo para reanudar los vuelos de venezolanos deportados desde EE.UU.
-*   **Utilización de la Ley de Enemigos Extranjeros:** La administración Trump invocó la Ley de Enemigos Extranjeros para acelerar las deportaciones de miembros del Tren de Aragua, aunque esta medida fue bloqueada temporalmente por un juez federal.
-*   **Cooperación con Rusia e Irán:** Ante la presión de EE.UU., Venezuela busca fortalecer la cooperación con Rusia e Irán en diversos sectores, incluyendo el energético y militar.
-*   **Búsqueda de Inversión Extranjera:** Maduro declara una apertura total a la inversión extranjera en el sector petrolero, buscando alternativas ante la salida de Chevron.
-*   **Reconfiguración de Flujos Migratorios:** Las políticas de línea dura de Trump están alterando los flujos migratorios, con un aumento de migrantes venezolanos que regresan a su país o buscan nuevos destinos como España y Brasil.
-*   **Designación del Tren de Aragua como Organización Terrorista:** Estados Unidos designó al Tren de Aragua como organización terrorista, intensificando la persecución de sus miembros y vinculando al grupo con el gobierno de Maduro.
-*   **Elección del Nuevo Secretario General de la OEA:** La elección de Albert Ramdin como Secretario General de la OEA genera expectativas de un enfoque más dialogante hacia Venezuela, aunque enfrenta la presión de Estados Unidos para mantener una postura firme contra el gobierno de Maduro.
+*   **Política Migratoria Restrictiva:** La administración Trump ha intensificado las deportaciones de venezolanos, invocando la Ley de Enemigos Extranjeros y enviando a algunos a prisiones en El Salvador, generando controversia y denuncias de violaciones de derechos humanos. Se observa una narrativa que vincula a los migrantes venezolanos con la banda criminal Tren de Aragua, aunque informes de inteligencia contradicen la conexión directa con el gobierno de Maduro.
+*   **Sanciones Económicas y Petroleras:** Se mantiene la política de sanciones económicas contra Venezuela, con la revocación de licencias a empresas petroleras como Chevron, lo que impacta la producción y exportación de crudo. Sin embargo, se evalúa una posible extensión de la licencia de Chevron, posiblemente condicionada a la aceptación de vuelos de deportación y al destino de los ingresos petroleros.
+*   **Tensiones Diplomáticas:** Las relaciones bilaterales se caracterizan por la tensión y la desconfianza, con acusaciones mutuas de injerencia y violaciones de derechos humanos. Estados Unidos amenaza con nuevas sanciones si Venezuela no acepta los vuelos de deportación, mientras que Venezuela denuncia el trato a sus migrantes y la injerencia de ExxonMobil en la controversia por el territorio de la Guayana Esequiba.
+*   **Confiscación de Bienes:** Estados Unidos busca la confiscación de bienes vinculados al gobierno de Maduro, como el avión presidencial, alegando violaciones de las leyes de sanciones y lavado de dinero.
+*   **Reacciones Internas:** La situación genera divisiones internas en Venezuela, con la oposición criticando la política migratoria de EE.UU. y el gobierno denunciando un "secuestro" de migrantes.
         """,
         'key_areas': """
-*   **Impacto Económico de las Sanciones:** Es crucial analizar el impacto de las sanciones en la economía venezolana, incluyendo la producción petrolera, la inflación y el bienestar de la población.
-*   **Dinámica Migratoria:** Se debe monitorear la evolución de los flujos migratorios venezolanos, incluyendo las deportaciones desde EE.UU. y la búsqueda de nuevos destinos por parte de los migrantes.
-*   **Cooperación Internacional:** Es importante analizar las implicaciones de la creciente cooperación entre Venezuela y países como Rusia e Irán, así como su impacto en la relación con Estados Unidos.
-*   **Seguridad Regional:** Se debe prestar atención a la situación del Tren de Aragua y su impacto en la seguridad regional, así como a las acusaciones de vínculos entre el grupo y el gobierno de Maduro.
-*   **Diálogo y Negociación:** Es fundamental explorar las posibilidades de diálogo y negociación entre Estados Unidos y Venezuela, así como el papel que la OEA y otros actores internacionales pueden desempeñar en este proceso.
-*   **Implicaciones para la Industria Petrolera:** Analizar las consecuencias de la salida de Chevron y la posible entrada de nuevas empresas, así como el impacto en la producción y exportación de petróleo venezolano.
-*   **Disputa Territorial con Guyana:** Monitorear la evolución de la disputa territorial entre Venezuela y Guyana por el Esequibo, y el papel de las empresas petroleras en esta controversia.
-*   **Derechos Humanos y Estado de Derecho:** Evaluar el impacto de las políticas de Estados Unidos y Venezuela en los derechos humanos y el estado de derecho en el país, incluyendo la situación de los presos políticos y la libertad de expresión.
+*   **Impacto Humanitario de las Sanciones:** Es crucial evaluar el impacto de las sanciones económicas en la población venezolana, especialmente en el acceso a bienes esenciales y servicios básicos.
+*   **Protección de los Derechos de los Migrantes:** Se debe monitorear de cerca la situación de los migrantes venezolanos en Estados Unidos, garantizando el debido proceso y evitando la criminalización injusta.
+*   **Estabilidad Política y Económica:** Es importante analizar las implicaciones de las políticas de EE.UU. en la estabilidad política y económica de Venezuela, considerando el impacto en la producción petrolera, la inversión extranjera y la gobernabilidad.
+*   **Influencia de Actores Externos:** Se debe evaluar la influencia de otros actores externos, como China y Rusia, en la economía y la política venezolana, y su impacto en la relación con Estados Unidos.
+*   **Posibles Escenarios de Negociación:** Es necesario analizar los posibles escenarios de negociación entre Estados Unidos y Venezuela, considerando los intereses en juego y las condiciones para un diálogo constructivo.
         """
     }
 }
@@ -512,10 +525,9 @@ st.markdown("---")
 st.markdown("""
 #### Implicaciones para proyecciones económicas 
 
-Es crucial monitorear y analizar el impacto de las políticas de la administración Trump en la economía de América Latina y el Caribe, incluyendo la devaluación de monedas, la caída de remesas y el aumento de la inflación. Se deben identificar medidas para mitigar los riesgos y aprovechar las oportunidades que puedan surgir.
-La evolución de los **precios de commodities** seguirá siendo determinante para los exportadores de materias primas, mientras que las **tensiones comerciales entre EE.UU. y China** podrían crear oportunidades de diversificación para países como México y Brasil.
-Las **políticas migratorias** representan un factor de riesgo significativo para economías dependientes de remesas, particularmente en Centroamérica, donde podrían afectar hasta un 20% del PIB de algunos países.
-De igual manera, se debe prestar atención a las dinámicas geopolíticas en la región y el papel de Estados Unidos en el equilibrio de poder, especialmente en relación con China.
+El análisis de los hechos noticiosos presentados revela varias implicaciones económicas para América Latina y el Caribe, que la CEPAL deberá considerar en sus proyecciones. La imposición de aranceles por parte de EE.UU., especialmente si se extienden a México y otros socios comerciales, podría frenar el crecimiento regional y aumentar la inflación. La OCDE ya prevé una recesión en México debido a estas políticas. La CEPAL deberá evaluar el impacto de estas medidas en el comercio intrarregional y en la competitividad de las exportaciones latinoamericanas.
+Las políticas migratorias restrictivas de EE.UU. impactan el flujo de remesas, crucial para economías como Honduras, donde representan un 25% del PIB. Si bien inicialmente las remesas pueden aumentar por envíos precautorios, a largo plazo la reducción de migrantes empleados en EE.UU. podría disminuir estos ingresos. La CEPAL deberá analizar la vulnerabilidad de las economías dependientes de remesas ante estos cambios. 
+La disputa entre EE.UU. y China por el control de recursos estratégicos como el litio y el Canal de Panamá genera incertidumbre en la región. La CEPAL deberá monitorear cómo estas tensiones geopolíticas afectan la inversión extranjera directa y las oportunidades de diversificación económica para los países latinoamericanos.
 
             
 """, unsafe_allow_html=True)
