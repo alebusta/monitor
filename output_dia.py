@@ -70,7 +70,7 @@ columna1, columna2, columna3, columna4 = st.columns([1,1,1,1])
 with columna4:
     st.markdown("""
 <div style='text-align: left; font-style: italic; font-size: 16px; color: gray;'>
-    Resumen en audio (7min)
+    Resumen en audio (4min)
 </div>
 """, unsafe_allow_html=True)
     # Mostrar el reproductor
