@@ -24,12 +24,12 @@ def get_base64_of_bin_file(file_path):
 
 
 # Cargar CSS desde un archivo externo
-with open("../style.css", "r") as f:
+with open("style.css", "r") as f:
     css = f.read()
     st.markdown(f"<style>{css}</style>", unsafe_allow_html=True)
 
 # Codificar la imagen
-img_base64 = get_base64_of_bin_file("../assets/22130.jpg")
+img_base64 = get_base64_of_bin_file("assets/22130.jpg")
 st.markdown(f"""
     <style>
     .header-banner {{
