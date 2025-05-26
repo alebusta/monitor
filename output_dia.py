@@ -64,12 +64,12 @@ audio_file = open('resumen_mar_04.mp3', 'rb')
 audio_bytes = audio_file.read()
 
 # Función para crear un enlace a PDF
-def get_pdf_link(pdf_file):
-    with open(pdf_file, "rb") as file:
-        pdf_bytes = file.read()
+#def get_pdf_link(pdf_file):
+#    with open(pdf_file, "rb") as file:
+#        pdf_bytes = file.read()
     
-    base64_pdf = base64.b64encode(pdf_bytes).decode('utf-8')
-    return f'<a href="data:application/pdf;base64,{base64_pdf}" download="resumen.pdf" style="font-size:16px; text-align: right; color:gray;">📄 versión para imprimir</a>'
+#    base64_pdf = base64.b64encode(pdf_bytes).decode('utf-8')
+#   return f'<a href="data:application/pdf;base64,{base64_pdf}" download="resumen.pdf" style="font-size:16px; text-align: right; color:gray;">📄 versión para imprimir</a>'
 
 
 columna1, columna2, columna3 = st.columns([3,1,1])
