@@ -80,6 +80,7 @@ with columna1:
     
  
 with columna2:
+    st.markdown("")
 
     # Ruta a tu archivo PDF - ajusta esta ruta según sea necesario
     #pdf_file = "monitor_mar_w4.pdf"
