@@ -86,8 +86,8 @@ with columna2:
     
     #try:
         # Mostrar el enlace para PDF
-        pdf_link = get_pdf_link(pdf_file)
-        st.markdown(pdf_link, unsafe_allow_html=True)
+     #   pdf_link = get_pdf_link(pdf_file)
+      #  st.markdown(pdf_link, unsafe_allow_html=True)
     #except FileNotFoundError:
     #    st.markdown("📄 <span style='color:#999;font-size:12px;'>PDF no disponible</span>", unsafe_allow_html=True)
 
