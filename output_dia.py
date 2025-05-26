@@ -44,7 +44,7 @@ st.markdown(f"""
 st.markdown("""
 
 <div class="header-banner">
-    <div class="header-slogan">Monitor de la guerra comercial EEUU</div>
+    <div class="header-slogan">Monitor de tendencias EEUU - Latinoamérica</div>
 </div>
 
 <div class="navbar">
