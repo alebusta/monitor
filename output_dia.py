@@ -10,7 +10,7 @@ from funciones import extraer_secciones
 
 # Configuración de página
 st.set_page_config(
-    page_title="Monitor EEUU-LATAM | CEPAL Lab",
+    page_title="Monitor EEUU-LATAM | Demo Lab",
     page_icon="🌎",
     layout="wide",
     initial_sidebar_state="collapsed"
@@ -49,11 +49,11 @@ st.markdown("""
 
 <div class="navbar">
     <div class="nav-left">
-        <div class="nav-item">Análisis de noticias de impacto para la región</div>
+        <div class="nav-item">Análisis de noticias de impacto para la región - Versión Beta</div>
         </div>
     <div class="nav-right">
         <div class="nav-item">Semana del 23 al 30 de marzo, 2025</div>
-        <div class="nav-item">🌎 CEPAL LAB</div>
+        <div class="nav-item">🌎 DEMO LAB</div>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -300,8 +300,8 @@ es fundamental la validación experta humana. Por lo tanto los resultados de los
 """)
 col1, col2, col3 = st.columns([1, 1, 1])
 with col1:
-    st.markdown('<p class="small-text">Reporte preparado por CEPAL Lab para el Trade Emergency Team</p>', unsafe_allow_html=True)
+    st.markdown('<p class="small-text">@alebusta </p>', unsafe_allow_html=True)
 with col2:
     st.markdown('<p class="small-text">Datos actualizados al 30 de marzo, 2025</p>', unsafe_allow_html=True)
 with col3:
-    st.markdown('<p class="small-text">© Cepal Lab - Versión demo </p>', unsafe_allow_html=True)
+    st.markdown('<p class="small-text">Versión demo </p>', unsafe_allow_html=True)
